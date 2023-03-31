@@ -84,7 +84,7 @@ const Question = ({ dehydratedData }: { dehydratedData: DehydratedState }) => {
   const [inputText, setInputText] = useState("");
   const {
     queries: [state],
-  } = dehydratedData;
+  } = dehydratedData ?? { queries: [] };
 
   const { state: currentState } = state ?? { state: null };
   const { data: currentD } = currentState as { data: Data[] } as {

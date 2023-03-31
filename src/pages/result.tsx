@@ -1,6 +1,6 @@
 "use client";
 
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 
 import React, { useEffect, useState } from "react";
 import { dehydrate, DehydratedState, QueryClient } from "react-query";
@@ -79,7 +79,7 @@ const fetchQuestionData = async (): Promise<Question[]> => {
   const data = await res.json();
   return data;
 };
-export const getServerSideProps: GetServerSideProps = async (Context) => {
+export const getServerSideProps: GetStaticProps = async (Context) => {
   const queryClient = new QueryClient();
   await queryClient.fetchQuery(["questionData"], fetchQuestionData);
   return {
