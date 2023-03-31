@@ -87,7 +87,7 @@ const Question = ({ dehydratedData }: { dehydratedData: DehydratedState }) => {
   } = dehydratedData ?? { queries: [] };
 
   const { state: currentState } = state ?? { state: null };
-  const { data: currentD } = currentState as { data: Data[] } as {
+  const { data: currentD } = (currentState ?? { data: [] }) as {
     data: Data[];
   };
 
