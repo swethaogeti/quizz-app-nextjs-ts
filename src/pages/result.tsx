@@ -1,7 +1,7 @@
 "use client";
 
 import { GetServerSideProps } from "next";
-import { Content } from "next/font/google";
+
 import React, { useEffect, useState } from "react";
 import { dehydrate, DehydratedState, QueryClient } from "react-query";
 import styled from "styled-components";
