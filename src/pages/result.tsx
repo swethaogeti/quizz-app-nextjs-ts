@@ -79,7 +79,7 @@ const fetchQuestionData = async (): Promise<Question[]> => {
   const data = await res.json();
   return data;
 };
-export const getStaticProps: GetStaticProps = async (Context) => {
+export const getServerSideProps: GetServerSideProps = async (Context) => {
   const queryClient = new QueryClient();
   await queryClient.fetchQuery(["questionData"], fetchQuestionData);
   return {
