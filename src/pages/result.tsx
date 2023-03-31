@@ -75,7 +75,7 @@ export default Result;
 //   };
 // };
 const fetchQuestionData = async (): Promise<Question[]> => {
-  const res = await fetch(process.env.ORIGIN + `/api/questionsData`);
+  const res = await fetch(process.env.NEXT_PUBLIC_QUESTIONS_PATH as string);
   const data = await res.json();
   return data;
 };
