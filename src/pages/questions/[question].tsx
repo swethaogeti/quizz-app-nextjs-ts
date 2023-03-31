@@ -86,8 +86,10 @@ const Question = ({ dehydratedData }: { dehydratedData: DehydratedState }) => {
     queries: [state],
   } = dehydratedData;
 
-  const { state: currentState } = state;
-  const { data: currentD } = currentState as { data: Data[] };
+  const { state: currentState } = state ?? { state: null };
+  const { data: currentD } = currentState as { data: Data[] } as {
+    data: Data[];
+  };
 
   const getCurrentData = () => {
     return setCurrentData(currentD.find((item) => "" + item.id === question));
@@ -175,7 +177,7 @@ const Question = ({ dehydratedData }: { dehydratedData: DehydratedState }) => {
 // };
 
 const fetchQuestion = async (): Promise<Data[]> => {
-  const res = await fetch(process.env.ORIGIN + `/api/questionsData`);
+  const res = await fetch(process.env.QUESTIONS_PATH as string);
   const data = await res.json();
   return data;
 };

@@ -28,7 +28,7 @@ const questions = ({ data }: { data: Data }) => {
 };
 
 export const getStaticProps: GetServerSideProps = async () => {
-  const res = await fetch(process.env.ORIGIN + "/api/questionsData");
+  const res = await fetch(process.env.QUESTIONS_PATH as string);
   const data = await res.json();
   return {
     props: {
