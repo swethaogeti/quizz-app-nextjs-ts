@@ -1,0 +1,14 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/about": "pages/about.html",
+  "/api/hello": "pages/api/hello.js",
+  "/api/questionsData": "pages/api/questionsData.js",
+  "/practice": "pages/practice.html",
+  "/": "pages/index.js",
+  "/result": "pages/result.js",
+  "/questions": "pages/questions.js",
+  "/questions/[question]": "pages/questions/[question].js",
+  "/404": "pages/404.html"
+}

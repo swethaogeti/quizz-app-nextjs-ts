@@ -11,7 +11,7 @@ import {
   useQuery,
 } from "react-query";
 import styled from "styled-components";
-import { GetServerSideProps } from "next";
+import { GetStaticProps, GetStaticPaths } from "next";
 const QuestionContainer = styled.div`
   margin: 2rem;
   display: flex;
@@ -79,15 +79,17 @@ const Question = ({ dehydratedData }: { dehydratedData: DehydratedState }) => {
   const router = useRouter();
   const { question } = router.query as { question: string };
 
+  console.log("dehydrated data ", dehydratedData, question);
+
   const [currrentData, setCurrentData] = useState<Data | undefined>();
   const [answerArray, setAnswerArray] = useState<string[]>([]);
   const [inputText, setInputText] = useState("");
   const {
     queries: [state],
-  } = dehydratedData;
+  } = dehydratedData ?? { queries: [] };
 
-  const { state: currentState } = state;
-  const { data: currentD } = currentState as { data: Data[] };
+  const { state: currentState } = state ?? { state: null };
+  const { data: currentD } = (currentState ?? { data: [] }) as { data: Data[] };
 
   const getCurrentData = () => {
     return setCurrentData(currentD.find((item) => "" + item.id === question));
@@ -164,7 +166,7 @@ const Question = ({ dehydratedData }: { dehydratedData: DehydratedState }) => {
   );
 };
 // export const getServerSideProps = async (context) => {
-//   const res = await fetch(process.env.ORIGIN + `/api/questionsData`);
+//   const res = await fetch(process.env.ORIGIN + `/questions.json`);
 //   const data = await res.json();
 
 //   return {
@@ -174,14 +176,16 @@ const Question = ({ dehydratedData }: { dehydratedData: DehydratedState }) => {
 //   };
 // };
 
-const fetchQuestion = async (): Promise<Data[]> => {
-  const res = await fetch(process.env.ORIGIN + `/api/questionsData`);
+const fetchQuestions = async (): Promise<Data[]> => {
+  const res = await fetch(process.env.ORIGIN + `/questions.json`);
   const data = await res.json();
   return data;
 };
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
+  const question = context.params?.question;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(["question"], fetchQuestion);
+  console.log("question number", question);
+  await queryClient.prefetchQuery(["question", question], fetchQuestions);
   return {
     props: {
       dehydratedData: dehydrate(queryClient),
@@ -189,6 +193,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
+export const getStaticPaths: GetStaticPaths = async () => {
+  const data = await fetchQuestions();
+  const paths = data.map(({ id }) => ({ params: { question: "" + id } }));
+
+  console.log("all paths", paths);
+  return {
+    paths,
+    fallback: true,
+  };
+};
+
 export default Question;
 
-// process.env.ORIGIN + `/api/questionsData/${context.params.question}`
+// process.env.ORIGIN + `/questions.json/${context.params.question}`

@@ -1,7 +1,6 @@
 "use client";
 
 import Head from "next/head";
-import { Inter } from "next/font/google";
 import Link from "next/link";
 import React, { ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -10,7 +9,6 @@ import { dehydrate, QueryClient, useQuery } from "react-query";
 import type { DehydratedState } from "react-query";
 
 import { GetStaticProps } from "next";
-const inter = Inter({ subsets: ["latin"] });
 
 type Info = {
   description: string;
@@ -60,9 +58,7 @@ const LinkButton = styled(Link)`
 `;
 
 const fetchQuestions = async (): Promise<Question[]> => {
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_ORIGIN + "/api/questionsData"
-  );
+  const res = await fetch(process.env.NEXT_PUBLIC_ORIGIN + "/questions.json");
   const data = await res.json();
 
   return data;
@@ -79,7 +75,6 @@ export default function Home({
   const { data } = stateData as { data: Info };
 
   const [qData, setQData] = useState([]);
-  const router = useRouter();
 
   const {
     data: questionData,
@@ -151,7 +146,7 @@ export default function Home({
 const getInfo = async (): Promise<Info> => {
   if (!process.env.ORIGIN) throw new Error("base url not found");
 
-  const res = await fetch(process.env.ORIGIN + "/api/hello");
+  const res = await fetch(process.env.ORIGIN + "/info.json");
 
   const data = await res.json();
 

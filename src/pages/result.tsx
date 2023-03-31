@@ -66,7 +66,7 @@ const Result = ({ dehydratedState }: { dehydratedState: DehydratedState }) => {
 export default Result;
 
 // export const getServerSideProps = async (context) => {
-//   const res = await fetch(process.env.ORIGIN + `/api/questionsData`);
+//   const res = await fetch(process.env.ORIGIN + `/questions.json`);
 //   const data = await res.json();
 //   return {
 //     props: {
@@ -75,7 +75,7 @@ export default Result;
 //   };
 // };
 const fetchQuestionData = async (): Promise<Question[]> => {
-  const res = await fetch(process.env.ORIGIN + `/api/questionsData`);
+  const res = await fetch(process.env.ORIGIN + `/questions.json`);
   const data = await res.json();
   return data;
 };
