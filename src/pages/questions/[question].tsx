@@ -177,7 +177,7 @@ const Question = ({ dehydratedData }: { dehydratedData: DehydratedState }) => {
 // };
 
 const fetchQuestion = async (): Promise<Data[]> => {
-  const res = await fetch(process.env.QUESTIONS_PATH as string);
+  const res = await fetch(process.env.NEXT_PUBLIC_QUESTIONS_PATH as string);
   const data = await res.json();
   return data;
 };
